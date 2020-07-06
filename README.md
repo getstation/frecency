@@ -78,7 +78,7 @@ onSearch: (searchQuery) => {
     email: 'brad@mixmax.com'
   };
 
-  return peopleFrecency.compteScore({
+  return peopleFrecency.computeScore({
     searchQuery,
     item,
   });
