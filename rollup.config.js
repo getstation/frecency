@@ -3,19 +3,14 @@ import replace from 'rollup-plugin-replace';
 
 const pkg = require('./package.json');
 
-const presets = [
-  ['env', { modules: false }],
-  'flow'
-];
+const presets = [['env', { modules: false }], 'flow'];
 
 const commonPlugins = [
   babel({
     babelrc: false,
     presets,
-    plugins: [
-      'external-helpers'
-    ],
-    exclude: [ 'node_modules/**' ]
+    plugins: ['external-helpers'],
+    exclude: ['node_modules/**'],
   }),
 ];
 
@@ -30,7 +25,7 @@ export default [
       {
         format: 'es',
         file: pkg.browser['./index.js'],
-      }
+      },
     ],
     plugins: commonPlugins.concat([
       replace({
@@ -44,7 +39,7 @@ export default [
       {
         format: 'cjs',
         file: pkg.main,
-      }
+      },
     ],
     plugins: commonPlugins.concat([
       replace({
@@ -52,4 +47,4 @@ export default [
       }),
     ]),
   },
-]
+];

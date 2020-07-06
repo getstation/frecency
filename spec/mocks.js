@@ -10,7 +10,7 @@ export class LocalStorageMock {
 
   getItem(key: string) {
     const value = this.data[key];
-    return (!value && typeof value !== 'string') ? null : value;
+    return !value && typeof value !== 'string' ? null : value;
   }
 
   setItem(key: string, value: string) {
@@ -24,7 +24,7 @@ export class LocalStorageMock {
   key(n: number) {
     const key = Object.keys(this.data)[n];
     const value = this.data[key];
-    return (!value && typeof value !== 'string') ? null : value;
+    return !value && typeof value !== 'string' ? null : value;
   }
 
   clear() {
