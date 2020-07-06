@@ -17,8 +17,14 @@ export function isSubQuery(str: ?string, query: string): boolean {
   if (!str) return false;
 
   // Split the string into words and order reverse-alphabetically.
-  const searchStrings = str.toLowerCase().split(' ').sort((a, b) => b > a ? 1 : -1);
-  const queryStrings = query.toLowerCase().split(' ').sort((a, b) => b > a ? 1 : -1);
+  const searchStrings = str
+    .toLowerCase()
+    .split(' ')
+    .sort((a, b) => (b > a ? 1 : -1));
+  const queryStrings = query
+    .toLowerCase()
+    .split(' ')
+    .sort((a, b) => (b > a ? 1 : -1));
 
   // Make sure each search string is a prefix of at least 1 word in the query strings.
   for (const searchString of searchStrings) {
