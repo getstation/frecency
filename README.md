@@ -85,21 +85,18 @@ onSearch: (searchQuery) => {
 }
 ```
 
-### Save several items for a same query
+### Save multiple items for a same query
 
 If you need to save several items, for example to init the frecency for the first time, it's recommended to use `saveItems` method instead of lopping on all your items and use `save` on each item
 
 ```js
-// several selections
+// in case of multiple selections
 const selections = [
-  { selectedId: '1', dateSelection: new Date(12345) },
-  { selectedId: '2' }, // current Date will be used by default
+  { searchQuery: 'brad', selectedId: '1', dateSelection: new Date(12345) },
+  { searchQuery: '', selectedId: '2' }, // currentDate will be used by default
 ];
 
-peopleFrecency.saveItems({
-  searchQuery: '',
-  selections,
-});
+peopleFrecency.saveItems(selections);
 ```
 
 ## Configuring Frecency
