@@ -3,6 +3,7 @@ import type {
   FrecencyData,
   FrecencyOptions,
   ComputeScoreParams,
+  SaveItemsParams,
   SaveParams,
   SortParams,
   StorageProvider,
@@ -62,25 +63,43 @@ class Frecency {
   save({ searchQuery, selectedId, dateSelection }: SaveParams): void {
     if (!selectedId || !this._localStorageEnabled) return;
 
-    const date = dateSelection ? dateSelection.getTime() : Date.now();
+    return this.saveItems({ searchQuery, selections: [{ selectedId, dateSelection }] });
+  }
+
+  /**
+   * Updates frecency data with several results
+   * batched version of `save` method
+   * @param {Object} params
+   *   @prop {String[]} selectedIds - String representing the ID of the search result selected.
+   *   @prop {String} searchQuery - The search query the user entered.
+   *   @prop {Date} [dateSelection] - The date on which item has been selected.
+   */
+  saveItems({ searchQuery, selections }: SaveItemsParams): void {
+    if (!selections || !selections.length || !this._localStorageEnabled) return;
 
     // Reload frecency here to pick up frecency updates from other tabs.
     const frecency = this._getFrecencyData();
 
-    // Associate the selection with the search query used. This lets us sort this
-    // selection higher when the user enters the search query again. See:
-    // https://slack.engineering/a-faster-smarter-quick-switcher-77cbc193cb60#80de
-    this._updateFrecencyByQuery(frecency, searchQuery, selectedId, date);
+    const now = Date.now();
 
-    // Associate the selection with its ID. If the user doesn't enter the same search
-    // query as before, but this selection shows up in the list of results, we still
-    // want this selection to show up higher because it was recently selected. See:
-    // https://slack.engineering/a-faster-smarter-quick-switcher-77cbc193cb60#700c
-    this._updateFrecencyById(frecency, searchQuery, selectedId, date);
+    selections.forEach(({ selectedId, dateSelection }) => {
+      const date = dateSelection ? dateSelection.getTime() : now;
 
-    this._cleanUpOldIds(frecency, selectedId);
+      // Associate the selection with the search query used. This lets us sort this
+      // selection higher when the user enters the search query again. See:
+      // https://slack.engineering/a-faster-smarter-quick-switcher-77cbc193cb60#80de
+      this._updateFrecencyByQuery(frecency, searchQuery, selectedId, date);
+
+      // Associate the selection with its ID. If the user doesn't enter the same search
+      // query as before, but this selection shows up in the list of results, we still
+      // want this selection to show up higher because it was recently selected. See:
+      // https://slack.engineering/a-faster-smarter-quick-switcher-77cbc193cb60#700c
+      this._updateFrecencyById(frecency, searchQuery, selectedId, date);
+
+      this._cleanUpOldIds(frecency, selectedId);
+    });
+
     this._saveFrecencyData(frecency);
-
     this._frecency = frecency;
   }
 

@@ -12,6 +12,8 @@ declare module '@getstation/frecency' {
     removeItem: (key: string) => void;
   };
 
+  export type FrecencySelectionPayload = { selectedId: string; dateSelection?: Date };
+
   export default class Frecency<T = any> {
     constructor(constructOpts: {
       key: string;
@@ -23,7 +25,8 @@ declare module '@getstation/frecency' {
       subQueryMatchWeight?: number;
       recentSelectionsMatchWeight?: number;
     });
-    save: (params: { searchQuery: string; selectedId: string; dateSelection?: Date }) => void;
+    save: (params: FrecencySelectionPayload & { searchQuery: string }) => void;
+    saveItems: (params: { searchQuery: string; selections: FrecencySelectionPayload[] }) => void;
     sort:
       | ((params: { searchQuery: string; results: T[] }) => T[])
       | ((params: {
