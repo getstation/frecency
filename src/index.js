@@ -63,7 +63,7 @@ class Frecency {
   save({ searchQuery, selectedId, dateSelection }: SaveParams): void {
     if (!selectedId || !this._localStorageEnabled) return;
 
-    return this.saveItems({ searchQuery, selections: [{ selectedId, dateSelection }] });
+    return this.saveItems([{ searchQuery, selectedId, dateSelection }]);
   }
 
   /**
@@ -74,15 +74,15 @@ class Frecency {
    *   @prop {String} searchQuery - The search query the user entered.
    *   @prop {Date} [dateSelection] - The date on which item has been selected.
    */
-  saveItems({ searchQuery, selections }: SaveItemsParams): void {
-    if (!selections || !selections.length || !this._localStorageEnabled) return;
+  saveItems(items: SaveItemsParams): void {
+    if (!items || !items.length || !this._localStorageEnabled) return;
 
     // Reload frecency here to pick up frecency updates from other tabs.
     const frecency = this._getFrecencyData();
 
     const now = Date.now();
 
-    selections.forEach(({ selectedId, dateSelection }) => {
+    items.forEach(({ selectedId, dateSelection, searchQuery }) => {
       const date = dateSelection ? dateSelection.getTime() : now;
 
       // Associate the selection with the search query used. This lets us sort this

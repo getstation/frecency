@@ -70,9 +70,10 @@ export type SaveParams = {
 };
 
 export type SaveItemsParams = {
-  selections: { selectedId: string, dateSelection?: Date }[],
+  selectedId: string,
+  dateSelection?: Date,
   searchQuery: ?string,
-};
+}[];
 
 export type ComputeScoreParams = {
   searchQuery: ?string,
