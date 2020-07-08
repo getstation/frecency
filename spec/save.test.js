@@ -70,19 +70,21 @@ describe('frecency', () => {
       });
     });
 
-    it('stores different selections for the same query.', () => {
+    it('saveItems: stores different selections for the same query.', () => {
       const frecency = new Frecency({ key: 'templates' });
 
-      global.Date.now = jest.fn(() => 1524085045510);
-      frecency.save({
+      frecency.saveItems({
         searchQuery: 'brad',
-        selectedId: 'brad vogel',
-      });
-
-      global.Date.now = jest.fn(() => 1524270045510);
-      frecency.save({
-        searchQuery: 'brad',
-        selectedId: 'brad neuberg',
+        selections: [
+          {
+            selectedId: 'brad vogel',
+            dateSelection: new Date(1524085045510),
+          },
+          {
+            selectedId: 'brad neuberg',
+            dateSelection: new Date(1524270045510),
+          },
+        ],
       });
 
       const data = JSON.parse((localStorage.getItem('frecency_templates'): any));
