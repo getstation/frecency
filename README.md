@@ -85,6 +85,20 @@ onSearch: (searchQuery) => {
 }
 ```
 
+### Save multiple items for a same query
+
+If you need to save several items - to init the frecency for the first time, for example - it's recommended to use `saveItems` method instead of looping on all your items and use `save` on each of them.
+
+```js
+// in case of multiple selections
+const selections = [
+  { searchQuery: 'brad', selectedId: '1', dateSelection: new Date(12345) },
+  { searchQuery: '', selectedId: '2' }, // currentDate will be used by default
+];
+
+peopleFrecency.saveItems(selections);
+```
+
 ## Configuring Frecency
 
 Frecency will sort on the `_id` attribute by default. You can change this by setting an

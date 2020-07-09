@@ -69,6 +69,12 @@ export type SaveParams = {
   dateSelection?: Date,
 };
 
+export type SaveItemsParams = {
+  selectedId: string,
+  dateSelection?: Date,
+  searchQuery: ?string,
+}[];
+
 export type ComputeScoreParams = {
   searchQuery: ?string,
   item: Object,
