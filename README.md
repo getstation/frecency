@@ -87,7 +87,7 @@ onSearch: (searchQuery) => {
 
 ### Save multiple items for a same query
 
-If you need to save several items, for example to init the frecency for the first time, it's recommended to use `saveItems` method instead of lopping on all your items and use `save` on each item
+If you need to save several items - to init the frecency for the first time, for example - it's recommended to use `saveItems` method instead of looping on all your items and use `save` on each of them.
 
 ```js
 // in case of multiple selections
