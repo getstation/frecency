@@ -1,6 +1,6 @@
 {
   "name": "@getstation/frecency",
-  "version": "1.6.0-2",
+  "version": "1.6.0",
   "description": "Frecency sorting for search results.",
   "main": "dist/main.js",
   "browser": {
